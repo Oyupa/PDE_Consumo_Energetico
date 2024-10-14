@@ -1,15 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Parte superior de la batería -->
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="@android:color/darker_gray" />
-            <size android:width="20dp" android:height="8dp" /> <!-- Tamaño del conector -->
-            <corners android:topLeftRadius="4dp" android:topRightRadius="4dp" /> <!-- Esquinas redondeadas en la parte superior -->
-        </shape>
-        <padding android:left="90dp" /> <!-- Desplazar hacia la derecha para alinearlo -->
-    </item>
 
     <!-- Cuerpo de la batería -->
     <item>
@@ -30,31 +19,15 @@
         </clip>
     </item>
 
-    <!-- Rayo -->
-    <item android:gravity="center">
-        <rotate
-            android:fromDegrees="90"
-            android:toDegrees="90">
-            <vector xmlns:android="http://schemas.android.com/apk/res/android"
-                android:width="20dp"
-                android:height="30dp"
-                android:viewportWidth="20"
-                android:viewportHeight="30">
-                <path
-                    android:fillColor="#0037FF"
-                    android:pathData="M10,0 L20,30 L0,30 Z" />
-            </vector>
-        </rotate>
+    <!-- Rayo con ajuste de tamaño y posición -->
+    <!--
+    <item>
+        <bitmap
+            android:src="@drawable/ic_bolt"
+            android:gravity="center"
+            android:tileMode="disabled"
+            android:scaleType="fitXY" />
     </item>
-
-    <!-- Cuadrado al final de la batería -->
-    <item android:gravity="end">
-        <shape android:shape="rectangle">
-            <solid android:color="@android:color/darker_gray" /> <!-- Color del cuadrado -->
-            <size android:width="10dp" android:height="10dp" /> <!-- Tamaño del cuadrado -->
-            <corners android:radius="2dp" /> <!-- Esquinas ligeramente redondeadas -->
-        </shape>
-        <padding android:left="5dp" /> <!-- Espaciado a la izquierda -->
-    </item>
+    -->
 
 </layer-list>
