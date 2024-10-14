@@ -1,6 +1,7 @@
 package com.example.pde_consumo_energetico
 
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -16,16 +17,19 @@ import com.example.pde_consumo_energetico.ui.theme.PDE_Consumo_EnergeticoTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            PDE_Consumo_EnergeticoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+        setContentView(R.layout.activity_main)
+
+        // Referencia a los botones
+        val btnViewConsumption = findViewById<Button>(R.id.btnViewConsumption)
+        val btnDataUpdate = findViewById<Button>(R.id.btnDataUpdate)
+
+        // Acciones al hacer clic en los botones
+        btnViewConsumption.setOnClickListener {
+            // Aquí irá la acción para navegar a la pantalla de consumo energético
+        }
+
+        btnDataUpdate.setOnClickListener {
+            // Aquí irá la acción para navegar a la pantalla de actualización de datos
         }
     }
 }
