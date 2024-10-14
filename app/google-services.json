@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "69631017430",
-    "project_id": "gestor-de-novelas",
-    "storage_bucket": "gestor-de-novelas.appspot.com"
+    "project_number": "686528497956",
+    "project_id": "consumo-energetico",
+    "storage_bucket": "consumo-energetico.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:69631017430:android:362a61e8142e7559b52477",
+        "mobilesdk_app_id": "1:686528497956:android:4be412056ce342b1cb4bb1",
         "android_client_info": {
-          "package_name": "com.example.gestornovelas_basedatos"
+          "package_name": "com.example.pde_consumo_energetico"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBPHOx3arPOjCS8f49xdtXwcCa5GoCkim8"
+          "current_key": "AIzaSyAjXfiX8L1ZelFRPfkTT_kt1oy38piVMRI"
         }
       ],
       "services": {
