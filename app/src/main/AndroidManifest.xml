@@ -25,12 +25,19 @@
             </intent-filter>
         </activity>
 
-        <!-- MainActivity -->
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.PDE_Consumo_Energetico" />
+
+        <activity
+            android:name=".NuevosDatos"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.PDE_Consumo_Energetico" />
+
 
     </application>
 
