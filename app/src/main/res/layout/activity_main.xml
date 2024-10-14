@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F0F4F8"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bienvenido a tu Monitor de Energía"
+        android:textSize="28sp"
+        android:textColor="#333"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:background="@drawable/text_background"
+        android:padding="8dp"
+    />
+    <Button
+        android:id="@+id/btnViewConsumption"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:text="Ver Consumo Energético"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_button_green"
+        android:textColor="#FFFFFF"
+        android:maxLines="2"
+        android:ellipsize="end"/>
+
+    <Button
+        android:id="@+id/btnDataUpdate"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:text="Actualizar Datos"
+        android:background="@drawable/rounded_button_blue"
+        android:textColor="#FFFFFF"
+        android:maxLines="2"
+        android:ellipsize="end"/>
+
+</LinearLayout>

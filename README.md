@@ -1,5 +1,5 @@
 ## PDE_Consumo_Energetico
 
-link al repositorio: https://github.com/Oyupa/PDE_Consumo_Energetico.git
+Link al repositorio: https://github.com/Oyupa/PDE_Consumo_Energetico.git
 
-Participantes: Miriam Blanco Ponce, Adrian Thierry Puyo Olias, Sira Gonzalez Madroño García y Sonia Tejero Recio
+Participantes: Miriam Blanco Ponce, Adrián Thierry Puyo Olías, Sira González-Madroño García y Sonia Tejero Recio
