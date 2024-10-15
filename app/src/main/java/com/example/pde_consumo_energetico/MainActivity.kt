@@ -1,5 +1,6 @@
 package com.example.pde_consumo_energetico
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.ComponentActivity
@@ -29,6 +30,8 @@ class MainActivity : ComponentActivity() {
         }
 
         btnDataUpdate.setOnClickListener {
+            val intent = Intent(this, NuevosDatos::class.java)
+            startActivity(intent)
             // Aquí irá la acción para navegar a la pantalla de actualización de datos
         }
     }
