@@ -20,19 +20,25 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Referencia a los botones
+
         val btnViewConsumption = findViewById<Button>(R.id.btnViewConsumption)
         val btnDataUpdate = findViewById<Button>(R.id.btnDataUpdate)
+        val btnRecomendaciones = findViewById<Button>(R.id.btnRecomendaciones)
 
-        // Acciones al hacer clic en los botones
+
         btnViewConsumption.setOnClickListener {
-            // Aquí irá la acción para navegar a la pantalla de consumo energético
+
         }
 
         btnDataUpdate.setOnClickListener {
             val intent = Intent(this, NuevosDatos::class.java)
             startActivity(intent)
-            // Aquí irá la acción para navegar a la pantalla de actualización de datos
+        }
+
+        btnRecomendaciones.setOnClickListener {
+            val intent = Intent(this, RecomendacionesActivity::class.java)
+            startActivity(intent)
+
         }
     }
 }

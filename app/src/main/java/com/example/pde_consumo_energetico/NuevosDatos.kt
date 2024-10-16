@@ -80,5 +80,5 @@ class NuevosDatos: ComponentActivity(){
     }
 
 
-
 }
+
