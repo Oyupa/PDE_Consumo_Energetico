@@ -21,6 +21,11 @@ En el proyecto se nos pedía realizar una aplicacion que se encargue de monitore
 
 ## Pantalla gráficos 
 
+En esta activity se muestra un gráfico con el consumo de las semanas del hogar, esta activity esta compuesta por dos botones: 
+
+  -> Botón volver al menu principal: este botón permite al usuario volver al menu principal y poder seguir navegandolos por la aplicación libremente.
+
+  -> Botón ver recomendaciones: este botón permite al usuario navegar a la pantalla de recomendaciones donde se mostrarán las mismas.
 
 ## Pantalla actualización
 
