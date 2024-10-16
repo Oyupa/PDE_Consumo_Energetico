@@ -27,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class PantallaConsumoEnergeticoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -214,6 +215,7 @@ fun LineChart(consumoData: List<Consumo>) {
 fun obtenerDatosDeFirebase(onDataLoaded: (List<Consumo>) -> Unit) {
     val db = FirebaseFirestore.getInstance()
     db.collection("consumo")
+        .orderBy("semana", Query.Direction.ASCENDING)
         .get()
         .addOnSuccessListener { result ->
             val consumoData = result.map { document ->
