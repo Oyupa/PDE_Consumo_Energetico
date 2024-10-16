@@ -44,15 +44,5 @@
         android:ellipsize="end"/>
 
     <!-- Nuevo botón para Recomendaciones -->
-    <Button
-        android:id="@+id/btnRecomendaciones"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:text="Recomendaciones"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_button_green"
-        android:textColor="#FFFFFF"
-        android:maxLines="2"
-        android:ellipsize="end"/>
 
 </LinearLayout>
