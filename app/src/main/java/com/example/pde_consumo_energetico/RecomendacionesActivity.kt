@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.compose.material3.Text
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -35,20 +36,22 @@ class RecomendacionesActivity : ComponentActivity() {
             textViewRecomendaciones.text = "$recomendacionConsumo\n\n$recomendacionEstacional"
         }
 
+        println(media())
+
     }
 
 
     private fun obtenerDatosConsumo(callback: (Int, Int) -> Unit) {
         db.collection("consumo")
             .orderBy("semana", Query.Direction.DESCENDING)
-            .limit(2)
+            //.limit(2)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val consumos = querySnapshot.documents
 
                 if (consumos.size >= 2) {
                     val consumoSemanaActual = consumos[0].getLong("consumo")?.toInt() ?: 0
-                    val consumoSemanaAnterior = consumos[1].getLong("consumo")?.toInt() ?: 0
+                    val consumoSemanaAnterior = media()
                     callback(consumoSemanaActual, consumoSemanaAnterior)
                 } else if (consumos.size == 1) {
                     val consumoSemanaActual = consumos[0].getLong("consumo")?.toInt() ?: 0
@@ -80,5 +83,27 @@ class RecomendacionesActivity : ComponentActivity() {
             in 5..8 -> "En días calurosos, evita el uso excesivo de aire acondicionado. Mantén las ventanas cerradas y usa ventiladores cuando sea posible para ahorrar energía."
             else -> "Mantén un uso balanceado de la energía durante las estaciones intermedias. Aprovecha la luz natural y ventila tu hogar de forma adecuada."
         }
+    }
+
+    private fun media(): Int {
+        var media = 0
+        db.collection("consumo")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                var totalConsumo = 0
+                val numSemanas = querySnapshot.size()
+                for (document in querySnapshot) {
+                    val consumo = document.getLong("consumo")
+                    if (consumo != null) {
+                        totalConsumo += consumo.toInt()
+                    }
+                }
+                media = totalConsumo / numSemanas
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error al obtener los datos de consumo", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        return media
     }
 }
