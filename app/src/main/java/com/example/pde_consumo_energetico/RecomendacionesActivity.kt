@@ -1,6 +1,8 @@
 package com.example.pde_consumo_energetico
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -12,11 +14,17 @@ import com.google.firebase.firestore.firestore
 class RecomendacionesActivity : ComponentActivity() {
 
     private var db: FirebaseFirestore = Firebase.firestore
+    private lateinit var Button: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recomendaciones)
 
+        Button = findViewById(R.id.buttonVolver)
+        Button.setOnClickListener {
+            val intent = Intent(this, PantallaConsumoEnergeticoActivity::class.java)
+            startActivity(intent)
+        }
 
         obtenerDatosConsumo { consumoSemanaActual, consumoSemanaAnterior ->
             val recomendacionConsumo = generarRecomendacion(consumoSemanaActual, consumoSemanaAnterior)

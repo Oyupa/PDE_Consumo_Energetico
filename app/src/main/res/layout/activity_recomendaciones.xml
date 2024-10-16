@@ -14,4 +14,12 @@
         android:textSize="18sp"
         android:textColor="#333"
         android:gravity="center" />
+
+    <Button
+        android:id="@+id/buttonVolver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Volver" />
+
+
 </LinearLayout>
