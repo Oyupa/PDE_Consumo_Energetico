@@ -1,7 +1,7 @@
 package com.example.pde_consumo_energetico
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
@@ -17,10 +17,10 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -31,7 +31,7 @@ class PantallaConsumoEnergeticoActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            PantallaConsumoConFirebase(navController)
+            NavegacionApp(navController)
         }
     }
 }
@@ -208,15 +208,19 @@ fun LineChart(consumoData: List<Consumo>) {
 
 fun obtenerDatosDeFirebase(onDataLoaded: (List<Consumo>) -> Unit) {
     val db = FirebaseFirestore.getInstance()
-    db.collection("consumo_energetico")
+    db.collection("consumo")
         .get()
         .addOnSuccessListener { result ->
             val consumoData = result.map { document ->
-                val dia = document.getLong("dia")?.toInt() ?: 0
-                val consumo = document.getDouble("consumo")?.toFloat() ?: 0f
-                Consumo(dia, consumo.toDouble())
+                val dia = document.getLong("semana")?.toInt() ?: 0
+                val consumo = document.getDouble("consumo") ?: 0.0
+                Consumo(dia, consumo)
             }
             onDataLoaded(consumoData)
+        }
+        .addOnFailureListener { exception ->
+            // Agrega un log para revisar si hay errores
+            Log.e("Firebase", "Error obteniendo datos", exception)
         }
 }
 
@@ -234,33 +238,29 @@ fun PantallaConsumoConFirebase(
     }
 
     // Mostrar la pantalla con los datos recuperados
-    PantallaConsumoEnergetico(
-        consumoData = consumoData,
-        navigateToMenuPrincipal = { navController.navigate("menu") },
-        navigateToRecomendaciones = { navController.navigate("recomendaciones") }
-    )
+    if (consumoData.isNotEmpty()) { // Verifica que haya datos antes de mostrar
+        PantallaConsumoEnergetico(
+            consumoData = consumoData,
+            navigateToMenuPrincipal = { navController.navigate("menu") },
+            navigateToRecomendaciones = { navController.navigate("recomendaciones") }
+        )
+    } else {
+        // Puedes mostrar un indicador de carga o un mensaje si no hay datos
+        CircularProgressIndicator()
+    }
 }
 
 @Composable
-fun NavegacionApp() {
-    val navController = rememberNavController()
-
-    NavHost(navController = navController, startDestination = "menu") {
-        composable("menu") {
-            // Iniciar SplashActivity directamente
-            val context = LocalContext.current
-            SplashActivity() // Cambiar esto para usar un Intent en lugar de un Composable
-            context.startActivity(Intent(context, SplashActivity::class.java))
+fun NavegacionApp(navController: NavHostController) {
+    NavHost(navController, startDestination = "pantalla_consumo") {
+        composable("pantalla_consumo") {
+            PantallaConsumoConFirebase(navController)
         }
-
-        // Pantalla de Consumo
-        composable("consumo") { PantallaConsumoConFirebase(navController) }
-
-        // Pantalla de Recomendaciones
+        composable("menu") {
+            MainActivity()
+        }
         composable("recomendaciones") {
-            val context = LocalContext.current
             RecomendacionesActivity()
-            context.startActivity(Intent(context, RecomendacionesActivity::class.java))
         }
     }
 }
@@ -268,16 +268,15 @@ fun NavegacionApp() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewPantallaConsumoEnergetico() {
-    val sampleData = listOf(
-        Consumo(1, 23.79),
-        Consumo(2, 135.0),
-        Consumo(3, 36.85),
-        Consumo(4, 100.60),
-        Consumo(5, 15.87)
+    val exampleData = listOf(
+        Consumo(1, 15.0),
+        Consumo(2, 20.0),
+        Consumo(3, 25.0),
+        Consumo(4, 30.0)
     )
     PantallaConsumoEnergetico(
-            consumoData = sampleData,
-            navigateToMenuPrincipal = {},
-            navigateToRecomendaciones = {}
+        consumoData = exampleData,
+        navigateToMenuPrincipal = {},
+        navigateToRecomendaciones = {}
     )
 }
