@@ -23,11 +23,10 @@ class MainActivity : ComponentActivity() {
 
         val btnViewConsumption = findViewById<Button>(R.id.btnViewConsumption)
         val btnDataUpdate = findViewById<Button>(R.id.btnDataUpdate)
-        val btnRecomendaciones = findViewById<Button>(R.id.btnRecomendaciones)
-
 
         btnViewConsumption.setOnClickListener {
-
+            val intent = Intent(this, RecomendacionesActivity::class.java)
+            startActivity(intent)
         }
 
         btnDataUpdate.setOnClickListener {
@@ -35,11 +34,6 @@ class MainActivity : ComponentActivity() {
             startActivity(intent)
         }
 
-        btnRecomendaciones.setOnClickListener {
-            val intent = Intent(this, RecomendacionesActivity::class.java)
-            startActivity(intent)
-
-        }
     }
 }
 
