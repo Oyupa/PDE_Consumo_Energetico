@@ -33,7 +33,6 @@ class MainActivity : ComponentActivity() {
         btnDataUpdate.setOnClickListener {
             val intent = Intent(this, NuevosDatos::class.java)
             startActivity(intent)
-
         }
 
         btnRecomendaciones.setOnClickListener {
