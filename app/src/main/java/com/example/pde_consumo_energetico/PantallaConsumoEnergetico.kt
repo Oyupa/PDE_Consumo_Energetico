@@ -1,5 +1,7 @@
 package com.example.pde_consumo_energetico
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -17,9 +19,9 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -39,8 +41,7 @@ class PantallaConsumoEnergeticoActivity : ComponentActivity() {
 @Composable
 fun PantallaConsumoEnergetico(
     consumoData: List<Consumo>,
-    navigateToMenuPrincipal: () -> Unit,
-    navigateToRecomendaciones: () -> Unit
+    context: Context
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -69,7 +70,11 @@ fun PantallaConsumoEnergetico(
 
         // Botón para volver al menú principal
         Button(
-            onClick = navigateToMenuPrincipal,
+            onClick = {
+                // Navegar a MainActivity
+                val intent = Intent(context, MainActivity::class.java)
+                context.startActivity(intent)
+            },
             modifier = Modifier.padding(8.dp)
         ) {
             Text(text = "Volver al Menú Principal")
@@ -77,7 +82,11 @@ fun PantallaConsumoEnergetico(
 
         // Botón para ir a recomendaciones
         Button(
-            onClick = navigateToRecomendaciones,
+            onClick = {
+                // Navegar a RecomendacionesActivity
+                val intent = Intent(context, RecomendacionesActivity::class.java)
+                context.startActivity(intent)
+            },
             modifier = Modifier.padding(8.dp)
         ) {
             Text(text = "Ver Recomendaciones de Ahorro")
@@ -221,9 +230,7 @@ fun obtenerDatosDeFirebase(onDataLoaded: (List<Consumo>) -> Unit) {
 }
 
 @Composable
-fun PantallaConsumoConFirebase(
-    navController: NavController
-) {
+fun PantallaConsumoConFirebase(navController: NavHostController) {
     var consumoData by remember { mutableStateOf(emptyList<Consumo>()) }
 
     // Obtener los datos de Firebase al inicializar el Composable
@@ -234,14 +241,12 @@ fun PantallaConsumoConFirebase(
     }
 
     // Mostrar la pantalla con los datos recuperados
-    if (consumoData.isNotEmpty()) { // Verifica que haya datos antes de mostrar
+    if (consumoData.isNotEmpty()) {
         PantallaConsumoEnergetico(
             consumoData = consumoData,
-            navigateToMenuPrincipal = { navController.navigate("menu") },
-            navigateToRecomendaciones = { navController.navigate("recomendaciones") }
+            context = LocalContext.current // Obtener el contexto
         )
     } else {
-        // Puedes mostrar un indicador de carga o un mensaje si no hay datos
         CircularProgressIndicator()
     }
 }
@@ -250,13 +255,8 @@ fun PantallaConsumoConFirebase(
 fun NavegacionApp(navController: NavHostController) {
     NavHost(navController, startDestination = "pantalla_consumo") {
         composable("pantalla_consumo") {
+            // Pasar el contexto a PantallaConsumoEnergetico
             PantallaConsumoConFirebase(navController)
-        }
-        composable("menu") {
-            MainActivity()
-        }
-        composable("recomendaciones") {
-            RecomendacionesActivity()
         }
     }
 }
@@ -272,7 +272,6 @@ fun PreviewPantallaConsumoEnergetico() {
     )
     PantallaConsumoEnergetico(
         consumoData = exampleData,
-        navigateToMenuPrincipal = {},
-        navigateToRecomendaciones = {}
+        context = LocalContext.current
     )
 }
