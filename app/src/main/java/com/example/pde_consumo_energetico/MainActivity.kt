@@ -22,7 +22,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         val btnViewConsumption = findViewById<Button>(R.id.btnViewConsumption)
         val btnDataUpdate = findViewById<Button>(R.id.btnDataUpdate)
 
