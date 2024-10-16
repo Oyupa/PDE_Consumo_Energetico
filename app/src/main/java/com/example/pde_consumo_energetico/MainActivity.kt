@@ -22,6 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         val btnViewConsumption = findViewById<Button>(R.id.btnViewConsumption)
         val btnDataUpdate = findViewById<Button>(R.id.btnDataUpdate)
 
@@ -35,22 +36,5 @@ class MainActivity : ComponentActivity() {
             startActivity(intent)
         }
 
-    }
-}
-
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PDE_Consumo_EnergeticoTheme {
-        Greeting("Android")
     }
 }

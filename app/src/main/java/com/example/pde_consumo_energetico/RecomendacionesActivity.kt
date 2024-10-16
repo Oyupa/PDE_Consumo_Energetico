@@ -26,17 +26,13 @@ class RecomendacionesActivity : ComponentActivity() {
             val intent = Intent(this, PantallaConsumoEnergeticoActivity::class.java)
             startActivity(intent)
         }
-
-        obtenerDatosConsumo { consumoSemanaActual, consumoSemanaAnterior ->
-            val recomendacionConsumo = generarRecomendacion(consumoSemanaActual, consumoSemanaAnterior)
-            val recomendacionEstacional = generarRecomendacionesEstacionales()
+        obtenerDatosConsumo { consumoSemanaActual, consumoMedio ->
+            val recomendacionConsumo = generarRecomendacion(consumoSemanaActual, consumoMedio)
 
 
             val textViewRecomendaciones = findViewById<TextView>(R.id.textViewRecomendaciones)
-            textViewRecomendaciones.text = "$recomendacionConsumo\n\n$recomendacionEstacional"
+            textViewRecomendaciones.text = "$recomendacionConsumo"
         }
-
-        println(media())
 
     }
 
@@ -44,15 +40,14 @@ class RecomendacionesActivity : ComponentActivity() {
     private fun obtenerDatosConsumo(callback: (Int, Int) -> Unit) {
         db.collection("consumo")
             .orderBy("semana", Query.Direction.DESCENDING)
-            //.limit(2)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val consumos = querySnapshot.documents
 
                 if (consumos.size >= 2) {
                     val consumoSemanaActual = consumos[0].getLong("consumo")?.toInt() ?: 0
-                    val consumoSemanaAnterior = media()
-                    callback(consumoSemanaActual, consumoSemanaAnterior)
+                    val consumoMedio = consumos.subList(1, consumos.size).map { it.getLong("consumo")?.toInt() ?: 0 }.average().toInt()
+                    callback(consumoSemanaActual, consumoMedio)
                 } else if (consumos.size == 1) {
                     val consumoSemanaActual = consumos[0].getLong("consumo")?.toInt() ?: 0
                     callback(consumoSemanaActual, 0)
@@ -67,43 +62,16 @@ class RecomendacionesActivity : ComponentActivity() {
         
     }
 
-    private fun generarRecomendacion(consumoSemanaActual: Int, consumoSemanaAnterior: Int): String {
+    private fun generarRecomendacion(consumoSemanaActual: Int, consumoMedio: Int): String {
         return when {
-            consumoSemanaActual < consumoSemanaAnterior -> "¡Felicidades! Has reducido tu consumo en la última semana. Sigue aplicando buenas prácticas como el uso de luces LED y el aprovechamiento de la luz natural."
-            consumoSemanaActual > consumoSemanaAnterior -> "Tu consumo ha aumentado en la última semana. Revisa si hay electrodomésticos en mal estado o si has aumentado el uso de calefacción o aire acondicionado. Considera mejorar la eficiencia energética de tu hogar."
-            else -> "Tu consumo se ha mantenido estable. Continúa aplicando buenas prácticas de ahorro energético."
+            consumoSemanaActual < consumoMedio -> "Tu consumo medio es de $consumoMedio euros, y la última semana has consumido $consumoSemanaActual euros. ¡Sigue así!"
+            consumoSemanaActual > consumoMedio -> "Tu consumo medio es de $consumoMedio euros, pero la última semana consumiste $consumoSemanaActual euros. Podrías reducir el gasto energético apagando luces y electrodomésticos cuando no los necesites."
+            else -> "Tu consumo se ha mantenido estable en $consumoMedio euros. Recuerda que siempre puedes ahorrar energía apagando luces y electrodomésticos innecesarios."
         }
     }
 
 
-    private fun generarRecomendacionesEstacionales(): String {
-        val month = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH)
-        return when (month) {
-            in 11..2 -> "Con el frío, el uso de calefacción puede aumentar. Mantén una temperatura moderada en tu hogar y asegúrate de que no haya fugas de aire en ventanas o puertas."
-            in 5..8 -> "En días calurosos, evita el uso excesivo de aire acondicionado. Mantén las ventanas cerradas y usa ventiladores cuando sea posible para ahorrar energía."
-            else -> "Mantén un uso balanceado de la energía durante las estaciones intermedias. Aprovecha la luz natural y ventila tu hogar de forma adecuada."
-        }
-    }
 
-    private fun media(): Int {
-        var media = 0
-        db.collection("consumo")
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                var totalConsumo = 0
-                val numSemanas = querySnapshot.size()
-                for (document in querySnapshot) {
-                    val consumo = document.getLong("consumo")
-                    if (consumo != null) {
-                        totalConsumo += consumo.toInt()
-                    }
-                }
-                media = totalConsumo / numSemanas
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error al obtener los datos de consumo", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        return media
-    }
+
+
 }

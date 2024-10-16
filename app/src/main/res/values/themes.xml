@@ -2,4 +2,7 @@
 <resources>
 
     <style name="Theme.PDE_Consumo_Energetico" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="SplashTheme" parent="Theme.PDE_Consumo_Energetico">
+        <item name="android:windowBackground">@drawable/battery_progress</item>
+    </style>
 </resources>

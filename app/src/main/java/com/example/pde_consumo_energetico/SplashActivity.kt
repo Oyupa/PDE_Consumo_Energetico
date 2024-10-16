@@ -11,9 +11,9 @@ class SplashActivity : ComponentActivity() {
     private var progressStatus = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.SplashTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
         progressBar = findViewById(R.id.loadingBattery)
 
         // Iniciar el progreso
@@ -26,7 +26,7 @@ class SplashActivity : ComponentActivity() {
                 }
                 try {
                     // Simula un tiempo de carga
-                    Thread.sleep(20) // Ajusta el tiempo según sea necesario
+                    Thread.sleep(30) // Ajusta el tiempo según sea necesario
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
