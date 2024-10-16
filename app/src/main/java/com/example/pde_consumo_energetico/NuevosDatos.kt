@@ -40,7 +40,7 @@ class NuevosDatos: ComponentActivity(){
 
     private fun actualizar() {
         val semana = editSemana.text.toString().toInt()
-        val consumo = editConsumo.text.toString().toInt()
+        val consumo = editConsumo.text.toString().toDouble()
         val nuevosDatos = Consumo(semana, consumo)
 
         val consumoCollection = db.collection("consumo")
