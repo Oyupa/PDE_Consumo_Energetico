@@ -55,6 +55,13 @@ fun PantallaConsumoEnergetico(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        //Texto del eje Y por encima del gráfico
+        Text(
+            text = "Consumo (kWh)",
+            style = MaterialTheme.typography.labelSmall,
+            modifier = Modifier.padding(end = 220.dp, bottom = 8.dp),
+        )
+
         // Llamada al gráfico de consumo
         LineChart(consumoData)
 
@@ -80,18 +87,18 @@ fun PantallaConsumoEnergetico(
 
 @Composable
 fun LineChart(consumoData: List<Consumo>) {
+
     // Dimensiones del gráfico
     val chartWidth = 300.dp
     val chartHeight = 200.dp
     val maxConsumo = consumoData.maxOfOrNull { it.consumo } ?: 1.0
 
     // Aumentar la altura del gráfico para acomodar las etiquetas
-    val adjustedChartHeight = chartHeight - 60.dp // Espacio para la etiqueta Y y el eje X
+    val adjustedChartHeight = chartHeight - 40.dp
 
     Canvas(modifier = Modifier.size(chartWidth, adjustedChartHeight)) {
         // Espaciado de la cuadrícula
         val gridSpacing = adjustedChartHeight.toPx() / 10
-        val maxWeek = consumoData.size.toFloat()
 
         // Dibujar la cuadrícula
         for (i in 0..10) {
@@ -134,17 +141,6 @@ fun LineChart(consumoData: List<Consumo>) {
             )
         }
 
-        // Etiqueta del eje Y
-        drawContext.canvas.nativeCanvas.drawText(
-            "Consumo (kWh)",
-            15f,
-            20f, // Posición Y ajustada
-            android.graphics.Paint().apply {
-                color = android.graphics.Color.BLACK
-                textSize = 24f
-                textAlign = android.graphics.Paint.Align.LEFT
-            }
-        )
 
         // Dibujar números en el eje X
         for (i in 0 until consumoData.size) {
@@ -167,7 +163,7 @@ fun LineChart(consumoData: List<Consumo>) {
             size.height + 40f, // Espacio ajustado
             android.graphics.Paint().apply {
                 color = android.graphics.Color.BLACK
-                textSize = 24f
+                textSize = 31f
                 textAlign = android.graphics.Paint.Align.LEFT
             }
         )
@@ -189,7 +185,7 @@ fun LineChart(consumoData: List<Consumo>) {
         // Dibujar la línea del gráfico
         drawPath(
             path = path,
-            color = Color.Blue,
+            color = Color.LightGray,
             style = Stroke(width = 5f, cap = StrokeCap.Round, join = StrokeJoin.Round)
         )
 
@@ -198,7 +194,7 @@ fun LineChart(consumoData: List<Consumo>) {
             val x = (index.toFloat() / (consumoData.size - 1).toFloat()) * size.width
             val y = size.height - ((consumo.consumo / maxConsumo).toFloat()) * size.height
             drawCircle(
-                color = Color.Red,
+                color = Color.Magenta,
                 radius = 6f,
                 center = Offset(x, y)
             )
