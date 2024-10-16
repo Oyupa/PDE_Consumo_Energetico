@@ -257,7 +257,11 @@ fun NavegacionApp() {
         composable("consumo") { PantallaConsumoConFirebase(navController) }
 
         // Pantalla de Recomendaciones
-        //composable("recomendaciones") { RecomendacionesActivity(recomendaciones = emptyList()) }
+        composable("recomendaciones") {
+            val context = LocalContext.current
+            RecomendacionesActivity()
+            context.startActivity(Intent(context, RecomendacionesActivity::class.java))
+        }
     }
 }
 

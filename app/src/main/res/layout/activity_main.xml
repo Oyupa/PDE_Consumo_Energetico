@@ -20,7 +20,8 @@
         android:gravity="center"
         android:background="@drawable/text_background"
         android:padding="8dp"
-    />
+        />
+
     <Button
         android:id="@+id/btnViewConsumption"
         android:layout_width="230dp"
@@ -41,5 +42,7 @@
         android:textColor="#FFFFFF"
         android:maxLines="2"
         android:ellipsize="end"/>
+
+    <!-- Nuevo botón para Recomendaciones -->
 
 </LinearLayout>
