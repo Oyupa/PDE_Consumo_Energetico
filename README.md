@@ -18,6 +18,13 @@ En el proyecto se nos pedía realizar una aplicacion que se encargue de monitore
 
 ## Pantalla inicio 
 
+En esta activity se muestra un mensaje de bienvenida al usuario y contiene dos botones: 
+
+  -> Botón ver consumo: este botón permite al usuario navegar a la activity que mostrará un gráfico con los datos del consumo del hogar.
+
+  -> Botón actualizar datos: este botón permite al usuario navegar a la activity que permite al usuario modificar o añadir datos a la base.
+
+Por otra parte, al iniciar el programa nos encontramos un splash screen que hace que simula una carga de la aplicación.
 
 ## Pantalla gráficos 
 
@@ -39,3 +46,6 @@ La activity esta compuesta por los TextEdits que permiten al usuario modificar u
 
 ## Pantalla recomendaciones
 
+En esta actvity se le muestra al usuario una pantalla donde puede ver si su consumo ha mejorado o empeorado comparando una semana con otra. A parte de esto el usuario encuentra un botón: 
+
+  -> Botón volver: este botón permite al usuario volver a la pantalla donde se muestran los graficos de consumo.
