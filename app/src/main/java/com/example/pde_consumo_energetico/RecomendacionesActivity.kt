@@ -20,7 +20,6 @@ class RecomendacionesActivity : ComponentActivity() {
         val textViewRecomendaciones = findViewById<TextView>(R.id.textViewRecomendaciones)
 
         obtenerDatosConsumo { consumoSemanaActual, consumoSemanaAnterior ->
-            // Generar recomendaciones con los datos obtenidos
             val recomendacionConsumo = generarRecomendacion(consumoSemanaActual, consumoSemanaAnterior)
             val recomendacionEstacional = generarRecomendacionesEstacionales()
 
