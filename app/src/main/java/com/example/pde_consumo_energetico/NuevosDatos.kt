@@ -43,18 +43,42 @@ class NuevosDatos: ComponentActivity(){
         val consumo = editConsumo.text.toString().toInt()
         val nuevosDatos = Consumo(semana, consumo)
 
-        //creamos una nueva novela con sus correspondientes atributos
+        val consumoCollection = db.collection("consumo")
 
-        db.collection("consumo")
-            .add(nuevosDatos)
-            .addOnSuccessListener { documentReference ->
-                Toast.makeText(this, "Datos de la semana ${nuevosDatos.semana} actualizados", Toast.LENGTH_SHORT).show()
-                finish()
+        consumoCollection
+            .whereEqualTo("semana", semana)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (documents.isEmpty) {
+                    consumoCollection
+                        .add(nuevosDatos)
+                        .addOnSuccessListener { documentReference ->
+                            Toast.makeText(this, "Datos de la semana ${nuevosDatos.semana} añadidos", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "Error al añadir los datos: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    for (document in documents) {
+                        consumoCollection
+                            .document(document.id)
+                            .set(nuevosDatos)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Datos de la semana ${nuevosDatos.semana} actualizados", Toast.LENGTH_SHORT).show()
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Error al actualizar los datos: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                }
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Error al actualizar los datos: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Error al verificar la existencia de la semana: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 
 
 }
